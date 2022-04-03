@@ -1,5 +1,5 @@
 {
-  "name": "fighting-role",
+  "name": "samurai-battle",
   "version": "1.0.0",
   "description": "Fighting Game",
   "main": "index.js",
@@ -12,6 +12,7 @@
   "author": "Sergi",
   "license": "ISC",
   "dependencies": {
+    "glob": "^7.2.0",
     "tsc-hooks": "^1.1.1"
   }
 }
