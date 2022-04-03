@@ -1,0 +1,17 @@
+{
+  "name": "fighting-role",
+  "version": "1.0.0",
+  "description": "Fighting Game",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "Game"
+  ],
+  "author": "Sergi",
+  "license": "ISC",
+  "dependencies": {
+    "tsc-hooks": "^1.1.1"
+  }
+}
