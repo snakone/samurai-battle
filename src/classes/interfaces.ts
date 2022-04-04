@@ -9,3 +9,10 @@ export interface AttackBox {
   h: number;
   offset: Coords;
 }
+
+export interface Stats {
+  name: string;
+  hp: number;
+  att: number;
+  def: number;
+}

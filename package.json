@@ -4,6 +4,7 @@
   "description": "Fighting Game",
   "main": "index.js",
   "scripts": {
+    "dev": "tsc -w",
     "build": "tsc -p tsconfig.json"
   },
   "keywords": [

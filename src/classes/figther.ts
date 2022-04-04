@@ -1,10 +1,11 @@
-import {attackAudio, attackAudio1} from "../lib/sounds.js";
-import { checkGravity, checkMov, checkSide } from "../utils/functions.js";
+import { attackAudio, attackAudio1 } from "../lib/sounds.js";
+import { checkGravity, checkMov } from "../utils/functions.js";
 import { context } from "./canvas.js";
-import { Coords, AttackBox } from "./interfaces.js";
+import { Coords, AttackBox, Stats } from "./interfaces.js";
 
 export const width = 50;
 export const height = 150;
+const tick = 100;
 
 class Fighter {
   lastKey!: string;
@@ -16,8 +17,10 @@ class Fighter {
     public enemy: boolean,
     public color: string,
     public box: AttackBox,
+    public stats: Stats,
     public w = width,
-    public h = height
+    public h = height,
+    public max = 0
   ) { 
     this.box = {
       pos: { 
@@ -31,12 +34,19 @@ class Fighter {
         y: box.offset.y
       }
     };
+
+    this.max = this.stats.hp;
+    document.querySelector(
+      enemy ? '.enemy-name' : '.fighter-name'
+    )!.textContent = this.stats.name;
   }
 
   public update(): void {
-    this.draw();
-    checkGravity(this);
-    checkMov(this);
+    if (this.stats.hp > 0) {
+      this.draw();
+      checkGravity(this);
+      checkMov(this);
+    }
   }
 
   public draw(): void {
@@ -57,9 +67,16 @@ class Fighter {
   }
 
   public attack(): void {
-    this.attacking = true;
-    this.vel.y == 0 ? attackAudio.play() : attackAudio1.play();
-    setTimeout(() => this.attacking = false, 100);
+    if (this.stats.hp > 0) {
+      this.attacking = true;
+      this.vel.y == 0 ? attackAudio.play() : attackAudio1.play();
+      setTimeout(() => this.attacking = false, tick);
+    }
+  }
+
+  public die(): void {
+    this.h = 0;
+    this.w = 0;
   }
 }
 

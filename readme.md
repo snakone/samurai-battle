@@ -2,6 +2,8 @@
 
 Canvas HTML5 Fighting Game with Typescript
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e9096d24-4647-48c7-bc8e-9249fea018a5/deploy-status)](https://app.netlify.com/sites/samurai-battle/deploys)
+
 # Installation
 
 1. Clone the repo
