@@ -1,7 +1,7 @@
 import { showMessage } from "../utils/functions.js";
 
 const seconds = 1000;
-let time = 10;
+let time = 60;
 export let interval!: number;
 
 export function timer(): void {

@@ -3,25 +3,34 @@ import { canvas } from "../classes/canvas.js";
 import Fighter, { width, height } from "../classes/figther.js";
 import { keys } from "../listeners/keyboard.js";
 import { players } from "../lib/players.js";
+import { sprites } from "../lib/sprites.js";
 
 const gravity = .7;
 const movX = 5;
 const movY = 15;
 const rate = .02;  // Each 50 DEF - 1 ATK
+const ground = 97;
 
 export function checkGravity(f: Fighter): void {
-  f.pos.y + height + f.vel.y >= canvas.height ? 
-  f.vel.y = 0 : f.vel.y += gravity
+  f.pos.y + height + f.vel.y >= canvas.height - ground ? 
+  (f.vel.y = 0, f.pos.y = 330) : f.vel.y += gravity
 }
 
 export function checkMov(f: Fighter): void {
   f.vel.x = 0;
   // Keys
   if (!f.enemy) {
-    if (keys.a && f.lastKey !== 'd') f.vel.x = -movX
-    if (keys.d && f.lastKey !== 'a') f.vel.x = movX
+    if (keys.a && f.lastKey !== 'd') {
+      f.vel.x = -movX;
+      f.switchSprite('run');
+    } else if (keys.d && f.lastKey !== 'a') {
+      f.vel.x = movX;
+      f.switchSprite('run');
+    } else f.switchSprite('idle');
     if (keys.w && f.lastKey === 'w' && f.vel.y === 0) f.vel.y = -movY
-  } else {
+    if (f.vel.y < 0) f.switchSprite('jump')
+    if (f.vel.y > 0) f.switchSprite('fall');
+  } else { // Enemy
     if (keys.ArrowLeft && f.lastKey !== 'd') f.vel.x = -movX
     if (keys.ArrowRight && f.lastKey !== 'a') f.vel.x = movX
     if (keys.ArrowUp && f.lastKey === 'ArrowUp' && f.vel.y === 0) f.vel.y = -movY
@@ -97,4 +106,8 @@ export function showMessage(timer = false): void {
       players[0].die();
     }
   }, timer ? 4000 : 500);
+}
+
+export function checkSprites(): void {
+  sprites.forEach(s => s.update());
 }
