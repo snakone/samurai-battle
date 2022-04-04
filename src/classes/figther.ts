@@ -77,6 +77,7 @@ class Fighter {
   public die(): void {
     this.h = 0;
     this.w = 0;
+    this.stats.hp = 0;
   }
 }
 

@@ -1,6 +1,8 @@
+import { interval } from "../listeners/timer.js";
 import { canvas } from "../classes/canvas.js";
 import Fighter, { width, height } from "../classes/figther.js";
 import { keys } from "../listeners/keyboard.js";
+import { players } from "../lib/players.js";
 
 const gravity = .7;
 const movX = 5;
@@ -44,13 +46,8 @@ export function collision(v: Fighter[]): void {
     f.attacking = false;
     if (e.stats.hp <= 0) { return; }
     e.stats.hp -= (f.stats.att - (e.stats.def * rate));
-    if (e.stats.hp <= 0) {
-      e.stats.hp = 0;
-      console.log(e.stats.name + ' just died!');
-      e.die();
-    };
+    if (e.stats.hp <= 0) e.stats.hp = 0;
     if (e.stats.hp >= e.max) e.stats.hp = e.max;
-    console.log('Fighter hit');
     document.getElementById('enemy-bar')!.style.width = e.stats.hp + '%'
   }
 
@@ -64,15 +61,12 @@ export function collision(v: Fighter[]): void {
     e.attacking = false;
     if (f.stats.hp <= 0) { return; }
     f.stats.hp -= (e.stats.att - (f.stats.def * rate));
-    if (f.stats.hp <= 0) {
-      f.stats.hp = 0;
-      console.log(f.stats.name + ' just died!');
-      f.die();
-    };
+    if (f.stats.hp <= 0) f.stats.hp = 0;
     if (f.stats.hp >= f.max) f.stats.hp = f.max;
-    console.log('Enemy hit');
     document.getElementById('fighter-bar')!.style.width = 100 - f.stats.hp + '%'
   }
+
+  if (f.stats.hp <= 0 || e.stats.hp <= 0) showMessage();
 }
 
 export function checkSide(v: Fighter[]): void {
@@ -86,4 +80,21 @@ export function checkSide(v: Fighter[]): void {
   e.pos.x < f.pos.x ?
   e.box.offset = { x: 0, y : 0} :
   e.box.offset = { x: -50, y : 0};
+}
+
+export function showMessage(timer = false): void {
+  window.clearInterval(interval);
+  const el = document.getElementById('message');
+  setTimeout(() => {
+    el!.style.display = 'flex';
+    if (players[0].stats.hp > players[1].stats.hp) {
+      el!.children![0].textContent = players[0].stats.name + ' Wins!';
+      players[1].die();
+    } else if (players[0].stats.hp === players[1].stats.hp) {
+      el!.children![0].textContent = 'It\'s a Tie!';
+    } else {
+      el!.children![0].textContent = players[1].stats.name + ' Wins!';
+      players[0].die();
+    }
+  }, timer ? 4000 : 500);
 }

@@ -36,6 +36,12 @@ nav {
   height: 80px;
   background: red;
   flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: white;
+  font-family: Samurai;
 }
 
 .fighter, .enemy {
@@ -50,10 +56,11 @@ nav {
 
 .fighter-name, .enemy-name {
   position: absolute;
-  top: 50px;
-  font-weight: bold;
+  top: 35px;
   color: white;
   font-size: 20px;
+  font-family: Name;
+  letter-spacing: 2px;
 }
 
 .enemy-name {
@@ -81,4 +88,54 @@ nav {
 #enemy-bar {
   width: 100%;
   background: blue;
+}
+
+#message {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  font-family: Samurai;
+  color: white;
+  font-size: 32px;
+}
+
+#message span {
+  border: 5px solid white;
+  padding: 12px 35px;
+}
+
+.animated {
+  -webkit-animation-duration: .8s;
+  animation-duration: .8s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+@font-face {
+  font-family: Samurai;
+  src: url('./assets/fonts/JANSINA.ttf');
+}
+
+@font-face {
+  font-family: Name;
+  src: url('./assets/fonts/AKUMARU.otf');
 }
