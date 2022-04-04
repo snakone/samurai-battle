@@ -8,6 +8,8 @@ export interface AttackBox {
   w: number;
   h: number;
   offset: Coords;
+  front: number;
+  back: number;
 }
 
 export interface Stats {
@@ -18,24 +20,17 @@ export interface Stats {
 }
 
 export interface Sprites {
-  idle: {
-    frames: number;
-    src: string;
-    image?: HTMLImageElement
-  },
-  run: {
-    frames: number;
-    src: string;
-    image?: HTMLImageElement
-  },
-  jump: {
-    frames: number;
-    src: string;
-    image?: HTMLImageElement
-  },
-  fall: {
-    frames: number;
-    src: string;
-    image?: HTMLImageElement
-  }
+  idle: SpriteImage,
+  run: SpriteImage,
+  jump: SpriteImage,
+  fall: SpriteImage,
+  attack1: SpriteImage,
+  attack2: SpriteImage,
+  hit: SpriteImage
+}
+
+interface SpriteImage {
+  frames: number;
+  image?: HTMLImageElement;
+  reverse?: HTMLImageElement;
 }

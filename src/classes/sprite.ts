@@ -10,12 +10,17 @@ class Sprite {
     public scale = 1,
     public frames = 1,
     public offset: Coords = {x: 0, y: 0},
+    public hold = 5,
     public current = 0,
-    public elapsed = 0,
-    public hold = 10,
+    public elapsed = 0
   ) { 
     this.img = new Image();
     if (src) this.img.src = src;
+  }
+
+  public updateSprite(): void {
+    this.draw();
+    this.animate();
   }
 
   public draw(): void {
@@ -32,10 +37,6 @@ class Sprite {
         this.img.height * this.scale
       );
     }
-  }
-
-  public update(): void {
-    this.draw();
   }
 
   public animate(): void {

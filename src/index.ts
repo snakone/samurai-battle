@@ -1,9 +1,8 @@
 import { context, canvas, background } from "./classes/canvas.js";
 import { listen } from './listeners/keyboard.js';
-import { checkSide, checkSprites, collision } from './utils/functions.js';
+import { checkSprites, collision } from './utils/functions.js';
 import { players } from './lib/players.js';
 import { timer } from "./listeners/timer.js";
-
 
 function animate(): void {
   window.requestAnimationFrame(animate);
@@ -11,7 +10,6 @@ function animate(): void {
   checkSprites();
   players.forEach(p => p.update());
   collision(players);
-  checkSide(players);
 }
 
 function fill(
@@ -26,6 +24,10 @@ function fill(
 animate();
 listen(players);
 timer();
+
+document.querySelector('button')?.addEventListener('click', ev => {
+  players.forEach((p, i) => console.log({pos: p.pos, box: p.box}))
+});
 
 
 

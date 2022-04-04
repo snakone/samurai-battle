@@ -1,7 +1,7 @@
 import { attackAudio, attackAudio1 } from "../lib/sounds.js";
 import { checkGravity, checkMov } from "../utils/functions.js";
 import { context } from "./canvas.js";
-import { Coords, AttackBox, Stats, Sprites } from "./interfaces.js";
+import { Coords, AttackBox, Stats } from "./interfaces.js";
 import Sprite from "./sprite.js";
 
 export const width = 50;
@@ -19,28 +19,24 @@ class Fighter extends Sprite {
   constructor(
     public pos: Coords,
     public enemy: boolean,
-    public color: string,
     public box: AttackBox,
     public stats: Stats,
     public src?: string,
     public scale = 1,
     public frames = 1,
     public offset: Coords = {x: 0, y: 0},
-    public sprites?: any
+    public sprites?: any,
+    public back = false
   ) {
     super(pos, src, scale, frames, offset);
 
     this.box = {
-      pos: { 
-        x: pos.x,
-        y: pos.y
-      },
+      pos: {x: this.pos.x, y: this.pos.y},
       w: box.w,
       h: box.h,
-      offset: {
-        x: box.offset.x,
-        y: box.offset.y
-      }
+      offset: box.offset,
+      front: box.front,
+      back: box.back
     };
 
     this.max = this.stats.hp;
@@ -52,8 +48,7 @@ class Fighter extends Sprite {
   public update(): void {
     if (this.stats.hp > 0) {
       this.move();
-      this.draw();  // Sprite
-      this.animate();  // Sprite
+      this.updateSprite();
       checkGravity(this);
       checkMov(this);
     }
@@ -63,24 +58,52 @@ class Fighter extends Sprite {
     if (context) {
       this.pos.y += this.vel.y;
       this.pos.x += this.vel.x;
+      this.box.pos!.x = this.pos.x;
       this.box.pos!.y = this.pos.y;
-      this.box.pos!.x = this.pos.x + this.box.offset.x;
+
+      context.fillStyle = 'yellow';
+      context.fillRect(this.box.pos!.x, this.box.pos!.y, this.box.w, this.box.h);
+ 
     }
   }
 
   public attack(): void {
     if (this.stats.hp > 0) {
+      this.switchSprite('attack1', this.back);
       this.attacking = true;
       this.vel.y == 0 ? attackAudio.play() : attackAudio1.play();
-      setTimeout(() => this.attacking = false, tick);
     }
   }
 
-  public switchSprite(sprite: string): void {
-    if (this.img !== this.sprites[sprite].image) {
-      this.img = this.sprites?.[sprite].image;
-      this.frames = this.sprites?.[sprite].frames || 0;
-      this.current = 0;
+  public switchSprite(
+    sprite: string,
+    reverse = false
+  ): void {
+    this.back = reverse;
+    if ((
+        this.img === this.sprites.attack1.image ||
+        this.img === this.sprites.attack1.reverse
+      ) &&
+       this.current < this.sprites.attack1.frames - 1) { return; }
+
+    if ((
+        this.img === this.sprites.hit.image ||
+        this.img === this.sprites.hit.reverse
+      ) &&
+       this.current < this.sprites.hit.frames - 1) { return; }
+
+    if (!this.back) {
+      if (this.img !== this.sprites[sprite].image) {
+        this.img = this.sprites?.[sprite].image;
+        this.frames = this.sprites?.[sprite].frames || 0;
+        this.current = 0;
+      }
+    } else {
+      if (this.img !== this.sprites[sprite].reverse) {
+        this.img = this.sprites?.[sprite].reverse;
+        this.frames = this.sprites?.[sprite].frames || 0;
+        this.current = 0;
+      }
     }
   }
 

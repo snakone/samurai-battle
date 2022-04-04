@@ -10,6 +10,7 @@ const movX = 5;
 const movY = 15;
 const rate = .02;  // Each 50 DEF - 1 ATK
 const ground = 97;
+const padding = 100;  // Padding Attacks
 
 export function checkGravity(f: Fighter): void {
   f.pos.y + height + f.vel.y >= canvas.height - ground ? 
@@ -22,18 +23,35 @@ export function checkMov(f: Fighter): void {
   if (!f.enemy) {
     if (keys.a && f.lastKey !== 'd') {
       f.vel.x = -movX;
-      f.switchSprite('run');
+      f.switchSprite('run', true);
+      
     } else if (keys.d && f.lastKey !== 'a') {
       f.vel.x = movX;
       f.switchSprite('run');
-    } else f.switchSprite('idle');
-    if (keys.w && f.lastKey === 'w' && f.vel.y === 0) f.vel.y = -movY
-    if (f.vel.y < 0) f.switchSprite('jump')
-    if (f.vel.y > 0) f.switchSprite('fall');
+    } else if (f.lastKey === 'a') {
+      f.switchSprite('idle', true);
+    } else {
+      f.switchSprite('idle', f.back);
+    }
+    if (keys.w && f.lastKey === 'w' && f.vel.y === 0) f.vel.y = -movY;
+    if (f.vel.y < 0) f.switchSprite('jump', f.back)
+    if (f.vel.y > 0) f.switchSprite('fall', f.back);
   } else { // Enemy
-    if (keys.ArrowLeft && f.lastKey !== 'd') f.vel.x = -movX
-    if (keys.ArrowRight && f.lastKey !== 'a') f.vel.x = movX
-    if (keys.ArrowUp && f.lastKey === 'ArrowUp' && f.vel.y === 0) f.vel.y = -movY
+    if (keys.ArrowLeft && f.lastKey !== 'ArrowRight') {
+      f.vel.x = -movX;
+      f.switchSprite('run', true);
+    }
+    else if (keys.ArrowRight && f.lastKey !== 'ArrowLeft') {
+      f.vel.x = movX;
+      f.switchSprite('run');
+    } else if (f.lastKey === 'ArrowLeft') {
+      f.switchSprite('idle', true);
+    } else {
+      f.switchSprite('idle', f.back);
+    }
+    if (keys.ArrowUp && f.lastKey === 'ArrowUp' && f.vel.y === 0) f.vel.y = -movY;
+    if (f.vel.y < 0) f.switchSprite('jump', f.back)
+    if (f.vel.y > 0) f.switchSprite('fall', f.back);
   }
 
   // Edges
@@ -47,11 +65,12 @@ export function collision(v: Fighter[]): void {
   
   if (
     f.box.pos!.x + f.box.w >= e.pos.x &&
-    f.box.pos!.x <= e.pos.x + e.w &&
+    f.box.pos!.x <= e.pos.x + e.w  &&
     f.box.pos!.y + f.box.h >= e.pos.y &&
-    f.box.pos!.y <= f.pos.y + e.h &&
-    f.attacking
+    f.box.pos!.y <= e.pos.y + e.h  &&
+    f.attacking && f.current === 4
   ) {
+    e.switchSprite('hit', e.back);
     f.attacking = false;
     if (e.stats.hp <= 0) { return; }
     e.stats.hp -= (f.stats.att - (e.stats.def * rate));
@@ -64,9 +83,10 @@ export function collision(v: Fighter[]): void {
     e.box.pos!.x + e.box.w >= f.pos.x &&
     e.box.pos!.x <= f.pos.x + f.w &&
     e.box.pos!.y + e.box.h >= f.pos.y &&
-    e.box.pos!.y <= e.pos.y + f.h &&
-    e.attacking
+    e.box.pos!.y <= f.pos.y + f.h &&
+    e.attacking && e.current === 2
   ) {
+    f.switchSprite('hit', f.back);
     e.attacking = false;
     if (f.stats.hp <= 0) { return; }
     f.stats.hp -= (e.stats.att - (f.stats.def * rate));
@@ -75,20 +95,9 @@ export function collision(v: Fighter[]): void {
     document.getElementById('fighter-bar')!.style.width = 100 - f.stats.hp + '%'
   }
 
+  if (f.attacking && f.current === 4) f.attacking = false;
+  if (e.attacking && e.current === 2) e.attacking = false;
   if (f.stats.hp <= 0 || e.stats.hp <= 0) showMessage();
-}
-
-export function checkSide(v: Fighter[]): void {
-  const f = v[0];
-  const e = v[1];
-
-  f.pos.x < e.pos.x ?
-  f.box.offset = { x: 0, y : 0} :
-  f.box.offset = { x: -50, y : 0};
-
-  e.pos.x < f.pos.x ?
-  e.box.offset = { x: 0, y : 0} :
-  e.box.offset = { x: -50, y : 0};
 }
 
 export function showMessage(timer = false): void {
@@ -109,5 +118,5 @@ export function showMessage(timer = false): void {
 }
 
 export function checkSprites(): void {
-  sprites.forEach(s => s.update());
+  sprites.forEach(s => s.updateSprite());
 }
