@@ -8,8 +8,6 @@ export interface AttackBox {
   w: number;
   h: number;
   offset: Coords;
-  front: number;
-  back: number;
 }
 
 export interface Stats {
@@ -17,6 +15,7 @@ export interface Stats {
   hp: number;
   att: number;
   def: number;
+  vel: number;
 }
 
 export interface Sprites {

@@ -1,6 +1,8 @@
 import { context } from "./canvas.js";
 import { Coords } from "./interfaces.js";
 
+const hold = 6;
+
 class Sprite {
   img!: HTMLImageElement | undefined;
 
@@ -10,7 +12,6 @@ class Sprite {
     public scale = 1,
     public frames = 1,
     public offset: Coords = {x: 0, y: 0},
-    public hold = 5,
     public current = 0,
     public elapsed = 0
   ) { 
@@ -42,7 +43,7 @@ class Sprite {
   public animate(): void {
     this.elapsed++;
 
-    if (this.elapsed % this.hold === 0) {
+    if (this.elapsed % hold === 0) {
       if (this.current < this.frames - 1) {
         this.current++;
       } else {

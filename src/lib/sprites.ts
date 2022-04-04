@@ -8,7 +8,9 @@ export const sprites: Sprite[] = [
   ),
   new Sprite(
     {x: 645, y: 160}, 
-    '../assets/images/shop.png', 2.5, 6
+    '../assets/images/shop.png',
+    2.5, // Scale
+    6 // Frames
   )
 ];
 

@@ -10,15 +10,17 @@ const movX = 5;
 const movY = 15;
 const rate = .02;  // Each 50 DEF - 1 ATK
 const ground = 97;
-const padding = 100;  // Padding Attacks
+const high = 330;
+let padding = 25;  // Padding Attacks
 
 export function checkGravity(f: Fighter): void {
   f.pos.y + height + f.vel.y >= canvas.height - ground ? 
-  (f.vel.y = 0, f.pos.y = 330) : f.vel.y += gravity
+  (f.vel.y = 0, f.pos.y = high) : f.vel.y += gravity
 }
 
 export function checkMov(f: Fighter): void {
   f.vel.x = 0;
+  f.back ? padding = -25 : 25;
   // Keys
   if (!f.enemy) {
     if (keys.a && f.lastKey !== 'd') {
@@ -65,7 +67,7 @@ export function collision(v: Fighter[]): void {
   
   if (
     f.box.pos!.x + f.box.w >= e.pos.x &&
-    f.box.pos!.x <= e.pos.x + e.w  &&
+    f.box.pos!.x <= e.pos.x + e.w - padding &&
     f.box.pos!.y + f.box.h >= e.pos.y &&
     f.box.pos!.y <= e.pos.y + e.h  &&
     f.attacking && f.current === 4
@@ -81,7 +83,7 @@ export function collision(v: Fighter[]): void {
 
   if (
     e.box.pos!.x + e.box.w >= f.pos.x &&
-    e.box.pos!.x <= f.pos.x + f.w &&
+    e.box.pos!.x <= f.pos.x + f.w - padding &&
     e.box.pos!.y + e.box.h >= f.pos.y &&
     e.box.pos!.y <= f.pos.y + f.h &&
     e.attacking && e.current === 2

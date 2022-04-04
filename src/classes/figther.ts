@@ -6,7 +6,6 @@ import Sprite from "./sprite.js";
 
 export const width = 50;
 export const height = 150;
-const tick = 100;
 
 class Fighter extends Sprite {
   lastKey!: string;
@@ -15,6 +14,7 @@ class Fighter extends Sprite {
   w = width;
   h = height;
   max = 0;
+  back = false
 
   constructor(
     public pos: Coords,
@@ -26,7 +26,6 @@ class Fighter extends Sprite {
     public frames = 1,
     public offset: Coords = {x: 0, y: 0},
     public sprites?: any,
-    public back = false
   ) {
     super(pos, src, scale, frames, offset);
 
@@ -34,10 +33,12 @@ class Fighter extends Sprite {
       pos: {x: this.pos.x, y: this.pos.y},
       w: box.w,
       h: box.h,
-      offset: box.offset,
-      front: box.front,
-      back: box.back
+      offset: box.offset
     };
+
+    if (this.enemy) {
+      this.switchSprite('idle', true);
+    }
 
     this.max = this.stats.hp;
     document.querySelector(
@@ -57,13 +58,15 @@ class Fighter extends Sprite {
   public move(): void {
     if (context) {
       this.pos.y += this.vel.y;
-      this.pos.x += this.vel.x;
-      this.box.pos!.x = this.pos.x;
-      this.box.pos!.y = this.pos.y;
+      this.pos.x += this.vel.x * this.stats.vel;
 
-      context.fillStyle = 'yellow';
-      context.fillRect(this.box.pos!.x, this.box.pos!.y, this.box.w, this.box.h);
- 
+      if (this.back) {
+        this.box.pos!.x = this.pos.x - this.offset.x + this.box.offset.x - (width / 2);
+        this.box.pos!.y = this.pos.y + this.box.offset.y;
+      } else {
+        this.box.pos!.x = this.pos.x + this.box.offset.x;
+        this.box.pos!.y = this.pos.y + this.box.offset.y;
+      }
     }
   }
 
