@@ -33,32 +33,44 @@ nav {
 }
 
 #counter {
-  width: 100px;
-  height: 80px;
-  background: red;
+  width: 75px;
+  height: 50px;
+  background: rgba(0,0,0, .5);
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 32px;
   font-family: Samurai;
   -webkit-text-stroke: black 2px;
   -webkit-text-fill-color: white;
+  border: 3px solid white;
+  border-radius: 5px;
+  padding-top: 3px;
 }
 
 .fighter, .enemy {
   width: 100%;
   height: 30px;
   position: relative;
+  border-top: 3px solid white;
+  border-bottom: 3px solid white;
+  overflow: hidden;
 }
 
 .fighter {
-  background: blue;
+  background: rgb(217, 210, 25);
+  border-left: 3px solid white;
+}
+
+.enemy {
+  background: red;
+  border-right: 3px solid white;
 }
 
 .fighter-name, .enemy-name {
   position: absolute;
-  top: 35px;
+  top: 69px;
   color: white;
   font-size: 20px;
   font-family: Name;
@@ -70,10 +82,7 @@ nav {
 .enemy-name {
   text-align: right;
   right: 0;
-}
-
-.enemy {
-  background: yellow;
+  margin-right: 20px;
 }
 
 #enemy-bar, #fighter-bar {
@@ -86,12 +95,12 @@ nav {
 
 #fighter-bar {
   width: 0;
-  background: yellow;
+  background: red;
 }
 
 #enemy-bar {
   width: 100%;
-  background: blue;
+  background: rgb(217, 210, 25);
 }
 
 #message {

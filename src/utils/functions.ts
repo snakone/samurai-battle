@@ -41,7 +41,8 @@ export function collision(v: Fighter[]): void {
     f.attacking && f.current === (f.back ? 2 : 3)
   ) {
     f.takeHit(e);
-    document.getElementById('enemy-bar')!.style.width = e.stats.hp + '%'
+    document.getElementById('enemy-bar')!
+    .style.width = (e.stats.hp <= 0 ? 0 : e.stats.hp) + '%'
   }
 
   // Enemy vs Fighter
@@ -53,7 +54,8 @@ export function collision(v: Fighter[]): void {
     e.attacking && e.current === 2
   ) {
     e.takeHit(f);
-    document.getElementById('fighter-bar')!.style.width = 100 - f.stats.hp + '%'
+    document.getElementById('fighter-bar')!
+    .style.width = 100 - (f.stats.hp <= 0 ? 0 : f.stats.hp) + '%'
   }
 
   // End Attack before animation ends
@@ -82,8 +84,10 @@ export function checkSprites(): void {
 }
 
 function fighterMove(f: Fighter): void {
-  if (keys.a && f.lastKey !== 'd') f.vel.x = -movX, f.switchSprite('run', true);  // Left
-  else if (keys.d && f.lastKey !== 'a') f.vel.x = movX, f.switchSprite('run');  // Right
+  if (keys.a && f.lastKey !== 'd') 
+   f.vel.x = -movX, f.switchSprite('run', true);  // Left
+  else if (keys.d && f.lastKey !== 'a') 
+   f.vel.x = movX, f.switchSprite('run');  // Right
   else f.switchSprite('idle', f.back);  // Idle AFK
   if (keys.w && f.lastKey === 'w' && f.vel.y === 0) f.vel.y = -movY;  // Jump
   if (f.vel.y < 0) f.switchSprite('jump', f.back);
@@ -91,8 +95,10 @@ function fighterMove(f: Fighter): void {
 }
 
 function enemyMove(f: Fighter): void {
-  if (keys.ArrowLeft && f.lastKey !== 'ArrowRight') f.vel.x = -movX, f.switchSprite('run', true);  // Left
-  else if (keys.ArrowRight && f.lastKey !== 'ArrowLeft') f.vel.x = movX, f.switchSprite('run');  // Right
+  if (keys.ArrowLeft && f.lastKey !== 'ArrowRight') 
+   f.vel.x = -movX, f.switchSprite('run', true);  // Left
+  else if (keys.ArrowRight && f.lastKey !== 'ArrowLeft') 
+   f.vel.x = movX, f.switchSprite('run');  // Right
   else f.switchSprite('idle', f.back);  // Idle AFK
   if (keys.ArrowUp && f.lastKey === 'ArrowUp' && f.vel.y === 0) f.vel.y = -movY;  // Jump
   if (f.vel.y < 0) f.switchSprite('jump', f.back)

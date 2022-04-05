@@ -55,7 +55,7 @@ class Fighter extends Sprite {
   }
 
   public attack(): void {
-    if (this.dead) { return; }
+    if (this.dead || this.attacking) { return; }
     this.attacking = true;
     this.vel.y == 0 ?  // Different Attack & Sound while jumping
     (this.switchSprite('attack1', this.back), attackAudio.play()) : 
@@ -70,16 +70,19 @@ class Fighter extends Sprite {
 
     if (this.img === this.sprites.death.image ||
         this.img === this.sprites.death.reverse) {  
-        if (this.current === this.sprites.death.frames - 1)
-      this.dead = true;
-      return;
+      if (this.current === this.sprites.death.frames - 1)
+        this.dead = true;
+        this.vel.x = 0;
+        return;
      }
     if ((this.img === this.sprites.attack1.image ||
         this.img === this.sprites.attack1.reverse
     ) && this.current < this.sprites.attack1.frames - 1) { return; }
+
     if ((this.img === this.sprites.attack2.image ||
         this.img === this.sprites.attack2.reverse
     ) && this.current < this.sprites.attack2.frames - 1) { return; }
+
     if ((this.img === this.sprites.hit.image ||
         this.img === this.sprites.hit.reverse
     ) && this.current < this.sprites.hit.frames - 1) { return; }
