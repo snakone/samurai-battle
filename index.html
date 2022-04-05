@@ -4,29 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Samurai Battle</title>
-  <link rel="stylesheet" type="text/css" href="./main.css">
+  <link rel="stylesheet" href="./main.css">
 </head>
   <body>
     <main>
       <div class="wrapper">
-        <nav>
+        <nav> <!-- PLAYER 1 -->
           <div class="fighter">
             <div id="fighter-bar"></div>
             <div class="fighter-name"></div>
-          </div>
+          </div> <!-- COUNTER -->
           <div id="counter">60</div>
+           <!-- PLAYER 2 -->
           <div class="enemy">
             <div id="enemy-bar"></div>
             <div class="enemy-name"></div>
           </div>
         </nav>
-      </div>
+      </div> <!-- MESSAGE -->
       <div id="message" class="animated fadeIn">
         <span></span>
-      </div>
+      </div> <!-- CANVAS -->
       <canvas id="game"></canvas>
     </main>
-    <button>Click</button>
-    <script src="index.js" type="module" text="javascript"></script>
+    <script src="index.js" type="module"></script>
   </body>
 </html>

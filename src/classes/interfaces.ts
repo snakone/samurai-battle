@@ -16,16 +16,18 @@ export interface Stats {
   att: number;
   def: number;
   vel: number;
+  max: number;
 }
 
 export interface Sprites {
-  idle: SpriteImage,
-  run: SpriteImage,
-  jump: SpriteImage,
-  fall: SpriteImage,
-  attack1: SpriteImage,
-  attack2: SpriteImage,
-  hit: SpriteImage
+  idle: SpriteImage;
+  run: SpriteImage;
+  jump: SpriteImage;
+  fall: SpriteImage;
+  attack1: SpriteImage;
+  attack2: SpriteImage;
+  hit: SpriteImage;
+  death: SpriteImage;
 }
 
 interface SpriteImage {

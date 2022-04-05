@@ -53,6 +53,11 @@ export const Sakurai: Sprites =
       frames: 4,
       image: createImage(path1 + 'TakeHit.png'),
       reverse: createImage(path1 + 'TakeHit_reverse.png')
+    },
+    death: {
+      frames: 6,
+      image: createImage(path1 + 'Death.png'),
+      reverse: createImage(path1 + 'Death_reverse.png')
     }
 };
 
@@ -92,6 +97,11 @@ export const Tatsuki: Sprites =
       frames: 4,
       image: createImage(path2 + 'TakeHit_reverse.png'),
       reverse: createImage(path2 + 'TakeHit.png')
+    },
+    death: {
+      frames: 7,
+      image: createImage(path2 + 'Death_reverse.png'),
+      reverse: createImage(path2 + 'Death.png')
     }
 };
 
