@@ -7,7 +7,7 @@ export const players: Fighter[] = [
     {x: 110, y: 0}, // Position
     false, // Enemy?
     {w: 140, h: 50, offset: {x: 80, y: 50}}, // Attack Box
-    {name: 'Sakurai', att: 10, hp: 100, def: 100, vel: 1, max: 100}, // Stats
+    {name: 'Sakurai', att: 10, hp: 100, def: 50, vel: 1, max: 100}, // Stats
     '../assets/images/samurai/Idle.png', // Image
     2.5, // Scale
     8, // Frames
@@ -18,7 +18,7 @@ export const players: Fighter[] = [
     {x: canvas.width - 160, y: 0}, 
     true,
     {w: 150, h: 50, offset: {x: 80, y: 50}}, 
-    {name: 'Tatsuki', att: 12, hp: 90, def: 50, vel: .8, max: 90},
+    {name: 'Tatsuki', att: 7, hp: 90, def: 50, vel: .8, max: 90},
     '../assets/images/kenji/Idle_reverse.png',
     2.5, 
     8,
