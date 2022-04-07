@@ -1,6 +1,12 @@
 export interface Coords {
   x: number;
   y: number;
+  back?: number;
+}
+
+export interface Size {
+  w: number;
+  h: number;
 }
 
 export interface AttackBox {
@@ -8,6 +14,8 @@ export interface AttackBox {
   w: number;
   h: number;
   offset: Coords;
+  default: Size;
+  special?: Size;
 }
 
 export interface Stats {
@@ -16,7 +24,7 @@ export interface Stats {
   att: number;
   def: number;
   vel: number;
-  max: number;
+  max?: number;
 }
 
 export interface Sprites {

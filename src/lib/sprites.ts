@@ -16,8 +16,9 @@ export const sprites: Sprite[] = [
 
 const path1 = '../assets/images/samurai/';
 const path2 = '../assets/images/kenji/';
+const path3 = '../assets/images/warrior/';
 
-export const Sakurai: Sprites = 
+export const SakuraiSprites: Sprites = 
   {
     idle: {
       frames: 8,
@@ -61,7 +62,7 @@ export const Sakurai: Sprites =
     }
 };
 
-export const Tatsuki: Sprites = 
+export const TatsukiSprites: Sprites = 
   {
     idle: {
       frames: 4,
@@ -102,6 +103,50 @@ export const Tatsuki: Sprites =
       frames: 7,
       image: createImage(path2 + 'Death_reverse.png'),
       reverse: createImage(path2 + 'Death.png')
+    }
+};
+
+export const ValdimorSprites: Sprites = 
+  {
+    idle: {
+      frames: 10,
+      image: createImage(path3 + 'Idle.png'),
+      reverse: createImage(path3 + 'Idle_reverse.png')
+    },
+    run: {
+      frames: 8,
+      image: createImage(path3 + 'Run.png'),
+      reverse: createImage(path3 + 'Run_reverse.png')
+    },
+    jump: {
+      frames: 3,
+      image: createImage(path3 + 'Jump.png'),
+      reverse: createImage(path3 + 'Jump_reverse.png')
+    },
+    fall: {
+      frames: 3,
+      image: createImage(path3 + 'Fall.png'),
+      reverse: createImage(path3 + 'Fall_reverse.png')
+    },
+    attack1: {
+      frames: 7,
+      image: createImage(path3 + 'Attack2.png'),
+      reverse: createImage(path3 + 'Attack2_reverse.png')
+    },
+    attack2: {
+      frames: 8,
+      image: createImage(path3 + 'Attack3.png'),
+      reverse: createImage(path3 + 'Attack3_reverse.png')
+    },
+    hit: {
+      frames: 4,
+      image: createImage(path3 + 'TakeHit.png'),
+      reverse: createImage(path3 + 'TakeHit_reverse.png')
+    },
+    death: {
+      frames: 7,
+      image: createImage(path3 + 'Death.png'),
+      reverse: createImage(path3 + 'Death_reverse.png')
     }
 };
 

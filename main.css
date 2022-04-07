@@ -1,11 +1,14 @@
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   display: grid;
   place-content: center;
-  height: 95vh;
+  height: 100vh;
+  background: rgb(59, 46, 43);
 }
 
 main {
@@ -21,6 +24,8 @@ canvas {
   position: absolute;
   width: 100%;
   height: 100%;
+  display: none;
+  border: 2px solid white;
 }
 
 nav {
@@ -70,9 +75,9 @@ nav {
 
 .fighter-name, .enemy-name {
   position: absolute;
-  top: 69px;
+  top: 65px;
   color: white;
-  font-size: 20px;
+  font-size: 23px;
   font-family: Name;
   letter-spacing: 1px;
   -webkit-text-stroke: black 2px;
@@ -90,7 +95,7 @@ nav {
   top: 0;
   left: 0;
   height: 100%;
-  transition: width .3s ease-in-out;
+  transition: width .5s ease-in-out;
 }
 
 #fighter-bar {
@@ -113,15 +118,16 @@ nav {
   left: 0;
   top: 0;
   font-family: Samurai;
-  color: black;
-  font-size: 32px;
+  font-size: 55px;
 }
 
 #message span {
-  border: 5px solid black;
-  padding: 12px 35px;
-  box-shadow: 0px 0px 20px 20px rgb(255, 255, 255);
-  background: white;
+  font-family: Samurai;
+  letter-spacing: 1px;
+  -webkit-text-stroke: black 2px;
+  -webkit-text-fill-color: white;
+  position: relative;
+  top: -10px;
 }
 
 .animated {

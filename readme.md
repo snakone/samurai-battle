@@ -11,3 +11,7 @@ Canvas HTML5 Fighting Game with Typescript
 3. Copy the `assets` folder into `/dist`
 4. Open with Live Server `/dist/index.html`
 5. Run `tsc -w` to develop
+
+# Demo
+
+[Samurai Fight](https://samurai-battle.netlify.app)

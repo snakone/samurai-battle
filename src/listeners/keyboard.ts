@@ -1,4 +1,5 @@
-import Fighter from "../classes/figther";
+import { socket } from "../index.js";
+import Fighter from "../classes/figther.js";
 
 export const keys: any = {
   a: false,  // Player 1 Left
@@ -14,11 +15,13 @@ export const keys: any = {
 };
 
 export function listen(f: Fighter[]): void {
-  window.addEventListener('keydown', (ev: KeyboardEvent) => manageKeyDown(ev.key, f[0], f [1]));
-  window.addEventListener('keyup', (ev: KeyboardEvent) => manageKeyUp(ev.key));
+  window.addEventListener('keydown', (ev: KeyboardEvent) => socket.emit('keyDown', ev.key));
+  window.addEventListener('keyup', (ev: KeyboardEvent) => socket.emit('keyUp', ev.key));
+  socket.listen('onKeyDown', (key: string) => socketKeyDown(key, f[0], f [1]));
+  socket.listen('onKeyUp', (key: string) => socketKeyUp(key));
 }
 
-function manageKeyDown(
+function socketKeyDown(
   key: string,
   f: Fighter,
   e: Fighter
@@ -32,14 +35,14 @@ function manageKeyDown(
       keys[key] = true;
       e.lastKey = key;
       break;
-    case ' ': f.attack();
+    case ' ': if (!e.dead) f.attack();
      break;
-    case 'Enter': e.attack();
+    case 'Enter': if (!f.dead) e.attack();
      break;
   }
 }
 
-function manageKeyUp(
+function socketKeyUp(
   key: string
 ): void {
   switch (key) {
